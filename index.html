@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#4b3ff0" />
+  <meta name="description" content="Morse Trainer — learn Morse code by ear. Hear a tone, pick the letter." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Morse Trainer" />
+
+  <title>Morse Trainer</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="panel">
+
+    <!-- ── Top bar ─────────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-key" aria-hidden="true">&middot;&minus;&minus;</span>
+        <span class="brand-name">Morse Trainer</span>
+      </div>
+      <button class="icon-btn" id="about-btn" aria-label="About Morse Trainer">About</button>
+    </header>
+
+    <!-- ── Signal scope (signature element) ────────────────────── -->
+    <section class="scope" aria-hidden="true">
+      <canvas id="scope-canvas"></canvas>
+      <div class="scope-readout">
+        <span class="scope-label">SIGNAL</span>
+        <span class="scope-freq" id="scope-freq">700 Hz</span>
+      </div>
+    </section>
+
+    <!-- ── Prompt + feedback ───────────────────────────────────── -->
+    <section class="prompt-block">
+      <p class="prompt" id="prompt">Tap a key or press Play to begin</p>
+      <p class="feedback" id="feedback">&nbsp;</p>
+    </section>
+
+    <!-- ── Controls ────────────────────────────────────────────── -->
+    <section class="controls">
+      <button class="btn btn-signal" id="replay-btn">
+        <span class="btn-glyph" aria-hidden="true">&#9654;</span> Replay
+      </button>
+      <button class="btn btn-ghost" id="skip-btn">
+        Skip <span aria-hidden="true">&#8635;</span>
+      </button>
+
+      <span class="controls-spacer"></span>
+
+      <label class="switch">
+        <input type="checkbox" id="patterns-toggle" />
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span class="switch-label">Show patterns</span>
+      </label>
+
+      <label class="select-wrap">
+        <span class="select-label">Mode</span>
+        <select id="mode-select" class="select">
+          <option value="LETTERS">Letters</option>
+          <option value="DIGITS">Digits</option>
+          <option value="LETTERS_AND_DIGITS">Letters + Digits</option>
+        </select>
+      </label>
+    </section>
+
+    <!-- ── Letter grid ─────────────────────────────────────────── -->
+    <main class="grid" id="grid" aria-label="Letter choices"></main>
+
+    <!-- ── Stats ───────────────────────────────────────────────── -->
+    <footer class="stats">
+      <div class="stat">
+        <span class="stat-value" id="stat-score">0</span>
+        <span class="stat-label">Score</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-streak">0</span>
+        <span class="stat-label">Streak &middot; best <b id="stat-best">0</b></span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="stat-accuracy">&mdash;</span>
+        <span class="stat-label">Accuracy</span>
+      </div>
+      <span class="controls-spacer"></span>
+      <button class="btn btn-ghost btn-sm" id="reset-btn">Reset stats</button>
+    </footer>
+
+  </div>
+
+  <!-- ── About dialog ────────────────────────────────────────────── -->
+  <div class="overlay" id="about-overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <button class="dialog-close" id="about-close" aria-label="Close">&times;</button>
+      <div class="about-key" aria-hidden="true">&middot;&minus;&minus;</div>
+      <h2 class="about-title" id="about-title">Morse Trainer</h2>
+      <p class="about-version">Version 1.0.0</p>
+      <p class="about-tagline">Learn Morse code by ear.</p>
+      <p class="about-copyright">
+        Copyright &copy; 2026 Tauasa Timoteo.<br />
+        Released under the MIT License.
+      </p>
+      <a class="about-link" id="about-link"
+         href="https://github.com/tauasa/morse-game"
+         target="_blank" rel="noopener noreferrer">
+        github.com/tauasa/morse-game
+      </a>
+      <button class="btn btn-signal about-ok" id="about-ok">OK</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
